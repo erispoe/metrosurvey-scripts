@@ -4,7 +4,7 @@ $(document).ready(function() {
   $.get(url).done(function(data){
     d = JSON.parse(data);
     console.log(d);
-    $("#county").html(d.countynamefull);
-    $("#state").html(d.StateName);
+    var txt = "Is <strong>" + d.countynamefull + ", " + d.StateName + "</strong> the county of your main place of residence?";
+    $("#countyR").html(txt);
   });
 });
