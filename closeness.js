@@ -3,48 +3,100 @@ $(document).ready(function() {
   var zipW = {Loc_WorkStudyZip} + "";
 
   var replace = function(dR, dW) {
+    var countyR = '';
     // Residential variables
     console.log(dR.StateName);
-    $("#countyR").html(dR.countynamefull); // County of residence
+    countyR = dR.countynamefull;
+    $("#countyR").html(countyR); // County of residence
     $("#stateR").html("The State of " + dR.StateName); // State of residence
 
     // Insert residential place name, as answered in a previous question
-    placeR = '{INSERTANS:995335X29X1411}';
-    if(placeR != '-oth-') {
-        i = parseInt(placeR);
-        $("#placeR").html(dR.cities[i-1]);
+    var placeRpr = '{INSERTANS:995335X29X1411}';
+    var placeR = '';
+    if(placeRpr != '-oth-') {
+        i = parseInt(placeRpr);
+        placeR = dR.cities[i-1];
+        $("#placeR").html(placeR);
     } else {
-        pRoth = '{INSERTANS:995335X29X1411other}';
-        $("#placeR").html(pRoth);
+        placeR = '{INSERTANS:995335X29X1411other}';
+        $("#placeR").html(placeR);
     };
 
-    // Insert metro area data, remove question if the respondent is not in a metro area
-    if(dR.PSATitle != null) {
-        $("#metroR").html(", " + dR.PSATitle);
-        $("#centralR").html(dR.PSACentralCity);
-    } else {
-        $("#javatbd995335X26X1106SQ004").remove();
-        $("#javatbd995335X26X1106SQ008").remove();
-    }
-
+    var placeW = '';
+    var countyW = '';
     if(dW == 0) {
-        $("#javatbd995335X26X1106SQ010").remove(); // Remove place of work
-        $("#javatbd995335X26X1106SQ009").remove(); // Remove county of work
+        $("#javatbd995335X26X1106SQ003").remove(); // Remove place of work
+        $("#javatbd995335X26X1106SQ008").remove(); // Remove county of work
     } else {
-        $("#countyW").html(dW.countynamefull); // Insert county of work
+        countyW = dW.countynamefull;
+        $("#countyW").html(countyW); // Insert county of work
 
         // Insert place of work
 
-        placeW = '{INSERTANS:995335X29X1413}';
-        if(placeW != '-oth-') {
-            i = parseInt(placeW);
-            $("#placeW").html(dW.cities[i-1]);
+        placeWpr = '{INSERTANS:995335X29X1413}';
+        if(placeWpr != '-oth-') {
+            i = parseInt(placeWpr);
+            placeW = dW.cities[i-1];
+            $("#placeW").html(placeW);
         } else {
-            pWoth = '{INSERTANS:995335X29X1413other}';
-            $("#placeW").html(pWoth);
+            placeW = '{INSERTANS:995335X29X1413other}';
+            $("#placeW").html(placeW);
         };
     };
 
+    // Insert metro area data (Primary statistical areas PSA), remove question if the respondent is not in a metro area
+    if(dR.PSATitle != null) {
+        var PSA = dR.PSATitle.split(', ');
+        $("#metroR").html('The greater ' + PSA[0] + ' area (' + PSA[1] + ')');
+
+        // Insert PSA central cities
+        var j = 0;
+        for (var i = 0; i < 3; i++) {
+            if(i < dR.PSACentralCities.length) {
+                city = dR.PSACentralCities[i];
+                // Check if central city is not place of residence or work
+                if(city != placeR & city != placeW) {
+                    $("#centralR" + String(1 + j)).html(city);
+                    j++;
+                }
+            }
+        };
+        // Remove empty slots
+        for (var i = j; i < 3; i++) {
+            $("#javatbd995335X26X1106SQ00" + String(4 + i)).remove()
+        };
+
+        // Insert PSA States
+        var j = 0;
+        for (var i = 0; i < 5; i++) {
+            if(i < dR.PSAStates.length) {
+                state = dR.PSAStates[i];
+                // Check for DC
+                if(state != countyR & state != countyW) {
+                    $("#stateMetro" + String(1 + j)).html(state);
+                    j++;
+                }
+            } 
+        }
+
+        // Remove empty slots
+        for (var i = j; i < 5; i++) {
+            $("#javatbd995335X26X1106SQ0" + String(10 + i)).remove()
+        };
+
+    } else {
+        // If no metro area:
+        // Remove field for metro area
+        $("#javatbd995335X26X1106SQ009").remove(); 
+
+        // Insert state of residence (and not states of metro area)
+        state = dR.StateName[i];
+        $("#stateMetro1").html(state);
+        // Remove other state fields
+        for (var i = 0; i < 4; i++) {
+            $("#javatbd995335X26X1106SQ0" + String(11 + i)).remove()        
+        };
+    }
 
   }
 
