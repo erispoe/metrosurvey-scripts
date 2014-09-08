@@ -6,9 +6,16 @@ $(document).ready(function() {
     var countyR = '';
     // Residential variables
     console.log(dR.StateName);
-    countyR = dR.countynamefull;
-    $("#countyR").html(countyR); // County of residence
-    $("#stateR").html("The State of " + dR.StateName); // State of residence
+
+    // County of residence
+    // Only if the county is not a consolidated city-county
+    if(dR.countyConsolidated != 1) {
+        countyR = dR.countynamefull;
+        $("#countyR").html(countyR); // County of residence
+    } else {
+        // Otherwise remove the county field
+        $("#javatbd995335X26X1106SQ007").remove();
+    }
 
     // Insert residential place name, as answered in a previous question
     var placeRpr = '{INSERTANS:995335X29X1411}';
@@ -28,8 +35,16 @@ $(document).ready(function() {
         $("#javatbd995335X26X1106SQ003").remove(); // Remove place of work
         $("#javatbd995335X26X1106SQ008").remove(); // Remove county of work
     } else {
-        countyW = dW.countynamefull;
-        $("#countyW").html(countyW); // Insert county of work
+            
+        // County of work
+        // Only if the county is not a consolidated city-county
+        if(dW.countyConsolidated != 1) {
+            countyW = dW.countynamefull;
+            $("#countyW").html(countyW); // County of work
+        } else {
+            // Otherwise remove the county field
+            $("#javatbd995335X26X1106SQ008").remove();
+        }
 
         // Insert place of work
 
@@ -81,7 +96,7 @@ $(document).ready(function() {
 
         // Remove empty slots
         for (var i = j; i < 5; i++) {
-            $("#javatbd995335X26X1106SQ0" + String(10 + i)).remove()
+            $("#javatbd995335X26X1106SQ0" + String(10 + i)).remove();
         };
 
     } else {
@@ -89,8 +104,13 @@ $(document).ready(function() {
         // Remove field for metro area
         $("#javatbd995335X26X1106SQ009").remove(); 
 
+        // Remove fields for centra cities of metro area
+        for (var i = 0; i < 3; i++) {
+            $("#javatbd995335X26X1106SQ00" + String(4 + i)).remove();
+        };
+
         // Insert state of residence (and not states of metro area)
-        state = dR.StateName[i];
+        state = dR.StateName;
         $("#stateMetro1").html(state);
         // Remove other state fields
         for (var i = 0; i < 4; i++) {
