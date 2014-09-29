@@ -1,5 +1,6 @@
 $(document).ready(function() {
   var zipR = {Loc_ResZip} + "";
+  var qId = $("[id^=javatbd]")[0].id.substring(0,21);
   
   var replace = function(dR) {
 
@@ -10,7 +11,7 @@ $(document).ready(function() {
         $("#countyR").html('in ' + countyR); // County of residence
     } else {
         // Otherwise remove the county field
-        $("#javatbd995335X24X1089A4").remove();
+        $("#" + qId + "A4").remove();
     }
 
     // Insert residential place name, as answered in a previous question
@@ -30,7 +31,7 @@ $(document).ready(function() {
         var PSA = dR.PSATitle.split(', ');
         $("#metroR").html('in the greater ' + PSA[0] + ' area (' + PSA[1] + ')');
     } else {
-        $("#javatbd995335X24X1089A5").remove();
+        $("#" + qId + "A5").remove();
     }
 
     // Insert state

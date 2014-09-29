@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+  var qId = $("[id^=javatbd]")[0].id.substring(0,21);
+
   var replace = function(dR) {
       if(dR.PSATitle != null) {
         // If there is a PSA (metro area), insert the name of the first central city

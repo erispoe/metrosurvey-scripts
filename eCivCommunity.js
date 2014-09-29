@@ -2,7 +2,7 @@ $(document).ready(function() {
   var zipR = {Loc_ResZip} + "";
   var zipW = {Loc_WorkStudyZip} + "";
 
-  var qId = '#javatbd995335X27X1118';
+  var qId = $("[id^=javatbd]")[0].id.substring(0,21);
 
   var replace = function(dR, dW) {
 

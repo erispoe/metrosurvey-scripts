@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+  var qId = $("[id^=javatbd]")[0].id.substring(0,21);
+
   var replace = function(dR) {
         // Insert state of residence
         state = dR.StateName;
