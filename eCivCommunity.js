@@ -2,7 +2,10 @@ $(document).ready(function() {
   var zipR = {Loc_ResZip} + "";
   var zipW = {Loc_WorkStudyZip} + "";
 
+  var qId = '#javatbd995335X27X1118';
+
   var replace = function(dR, dW) {
+
     var countyR = '';
     // Residential variables
     console.log(dR.StateName);
@@ -14,7 +17,7 @@ $(document).ready(function() {
         $("#countyR").html(countyR); // County of residence
     } else {
         // Otherwise remove the county field
-        $("#javatbd995335X26X1106SQ007").remove();
+        $(qId + "SQ008").remove();
     }
 
     // Insert residential place name, as answered in a previous question
@@ -32,8 +35,8 @@ $(document).ready(function() {
     var placeW = '';
     var countyW = '';
     if(dW == 0) {
-        $("#javatbd995335X26X1106SQ003").remove(); // Remove place of work
-        $("#javatbd995335X26X1106SQ008").remove(); // Remove county of work
+        $(qId + "SQ004").remove(); // Remove place of work
+        $(qId + "SQ009").remove(); // Remove county of work
     } else {
             
         // County of work
@@ -43,7 +46,7 @@ $(document).ready(function() {
             $("#countyW").html(countyW); // County of work
         } else {
             // Otherwise remove the county field
-            $("#javatbd995335X26X1106SQ008").remove();
+            $(pId + "SQ009").remove();
         }
 
         // Insert place of work
@@ -78,7 +81,7 @@ $(document).ready(function() {
         };
         // Remove empty slots
         for (var i = j; i < 3; i++) {
-            $("#javatbd995335X26X1106SQ00" + String(4 + i)).remove()
+            $(qId + "SQ00" + String(5 + i)).remove()
         };
 
         // Insert PSA States
@@ -96,17 +99,17 @@ $(document).ready(function() {
 
         // Remove empty slots
         for (var i = j; i < 5; i++) {
-            $("#javatbd995335X26X1106SQ0" + String(10 + i)).remove();
+            $(qId + "SQ0" + String(12 + i)).remove();
         };
 
     } else {
         // If no metro area:
         // Remove field for metro area
-        $("#javatbd995335X26X1106SQ009").remove(); 
+        $(qId + "SQ010").remove(); 
 
         // Remove fields for centra cities of metro area
         for (var i = 0; i < 3; i++) {
-            $("#javatbd995335X26X1106SQ00" + String(4 + i)).remove();
+            $(qId + "SQ00" + String(5 + i)).remove();
         };
 
         // Insert state of residence (and not states of metro area)
@@ -114,7 +117,7 @@ $(document).ready(function() {
         $("#stateMetro1").html(state);
         // Remove other state fields
         for (var i = 0; i < 4; i++) {
-            $("#javatbd995335X26X1106SQ0" + String(11 + i)).remove()        
+            $(qId + "SQ0" + String(12 + i)).remove()        
         };
     }
 
@@ -122,6 +125,8 @@ $(document).ready(function() {
 
 
   // ZipAPI url to get infos for residential and work places
+
+  $('<p><strong>Yes, for an issue concerning:</strong></p>').insertAfter(qId + "SQ001");
 
   if(zipR != 0) {
     var urlR = "http://swissmadearchitects.com/zipmetro-api/index.php?key=snickers&zip=" + zipR;  
