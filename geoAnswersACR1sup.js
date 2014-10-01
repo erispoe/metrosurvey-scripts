@@ -17,7 +17,13 @@ $(document).ready(function() {
         if(city == "San Jose") {
           city = "San Francisco";
         }
-        $("#ACR1").html(city);
+        if(city != placeR) {
+          $("#ACR1").html(city);
+        } else {
+          // If the place of residence is already the central city of the PSA (metro area), remove the question
+          $('#' + qId + "ACR1").remove();
+        }
+        
       } else {
         // If there is no PSA (metro area), remove the question
         $('#' + qId + "ACR1").remove();
